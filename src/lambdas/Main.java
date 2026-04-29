@@ -24,8 +24,26 @@ public class Main {
         people.sort(comparator.reversed());
         people.forEach(System.out::println);
 
-
         people.sort((o1, o2) -> o1.name.compareTo(o2.name));
+        people.forEach(System.out::println);
+
+        interface PersonComparator<Person> extends Comparator<Person>{
+            int secondLevelCompare(Person o1, Person o2);
+        }
+
+        var comparatorPerson = new PersonComparator<Person>() {
+            @Override
+            public int compare(Person o1, Person o2) {
+                return secondLevelCompare(o1, o2);
+            }
+
+            @Override
+            public int secondLevelCompare(Person o1, Person o2) {
+                return o1.age - o2.age;
+            }
+        };
+
+        people.sort(comparatorPerson.reversed());
         people.forEach(System.out::println);
     }
 }
