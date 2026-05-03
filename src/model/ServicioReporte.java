@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class ServicioReporte<T extends ProductoBancario, S>{
 
@@ -51,6 +53,14 @@ public class ServicioReporte<T extends ProductoBancario, S>{
         for (U producto : productos) {
             System.out.println( producto.getClass().getSimpleName() + " "  + producto.getDescripcion() + " "
                     + producto.getCodigo() + " " + " reportado a la sbs");
+        }
+    }
+
+    public static <T extends ProductoBancario> void emitirNuevoReporte3(Consumer<T> consumer, T object, Predicate<T> predicate){
+        if(predicate.test(object)) {
+            consumer.accept(object);
+        }else {
+            System.out.println(object.getDescripcion() + " no está activo");
         }
     }
 
