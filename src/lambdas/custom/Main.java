@@ -3,9 +3,10 @@ package lambdas.custom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.function.BiConsumer;
 import java.util.function.BinaryOperator;
-import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class Main {
 
@@ -52,6 +53,24 @@ public class Main {
 
         coordenadas.forEach(element -> processPoint(element[0], element[1], biconsumer));
 
+        String[] emptyStrings = new String[10];
+        System.out.println(Arrays.toString(emptyStrings));
+        Arrays.fill(emptyStrings, "empty");
+        System.out.println(Arrays.toString(emptyStrings));
+
+        Arrays.setAll(emptyStrings, i-> STR."\{i + 1}. \{switch (i) {
+                    case 0 -> "zero";
+                    case 1 -> "one";
+                    case 2 -> "two";
+                    default -> "empty";
+                }}"
+        );
+        System.out.println(Arrays.toString(emptyStrings));
+
+        String[] names = {"Jorge", "Carlos", "Ana", "Maria", "Carolina", "Daniela"};
+        String[] randomList = randomlySelectedValues(15, names, ()-> new Random().nextInt(names.length));
+        System.out.println(Arrays.toString(randomList));
+
 
     }
 
@@ -69,6 +88,14 @@ public class Main {
 
     public static <T> void processPoint(T t1, T t2, BiConsumer<T, T> consumer) {
         consumer.accept(t1, t2);
+    }
+
+    public static String[] randomlySelectedValues(int count, String[] values, Supplier<Integer> random){
+        String[] selectedValues = new String[count];
+        for (int i = 0; i < count; i++) {
+            selectedValues[i] = values[random.get()];
+        }
+        return selectedValues;
     }
 
 
