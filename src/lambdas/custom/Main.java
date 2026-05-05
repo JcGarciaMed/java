@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.function.BiConsumer;
-import java.util.function.BinaryOperator;
-import java.util.function.Supplier;
+import java.util.function.*;
 
 public class Main {
 
@@ -71,6 +69,29 @@ public class Main {
         String[] randomList = randomlySelectedValues(15, names, ()-> new Random().nextInt(names.length));
         System.out.println(Arrays.toString(randomList));
 
+        Consumer<String> printSomething = sentence -> Arrays.stream(sentence.split(" ")).forEach(System.out::println);
+
+        printSomething.accept("Hola mundo espero este sea un texto largo");
+
+        UnaryOperator<String> unaryOperator = source -> {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < source.length(); i++) {
+                   if (i % 2 == 0) {
+                       sb.append(source.charAt(i));
+                   }
+            }
+            return sb.toString();
+        };
+
+        System.out.println(unaryOperator.apply("1234567890"));
+
+        everySecondCharacter(unaryOperator, "1234567890");
+
+        Supplier<String> supplier = () -> "I love java";
+
+        System.out.println(supplier.get());
+
+
 
     }
 
@@ -96,6 +117,10 @@ public class Main {
             selectedValues[i] = values[random.get()];
         }
         return selectedValues;
+    }
+
+    public static void everySecondCharacter(UnaryOperator<String> operator, String source) {
+        System.out.println(operator.apply(source));
     }
 
 
