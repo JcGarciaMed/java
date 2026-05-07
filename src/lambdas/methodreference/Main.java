@@ -3,8 +3,10 @@ package lambdas.methodreference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
 import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 
 class PlainOld{
     private static int last_id=1;
@@ -40,6 +42,14 @@ public class Main {
         System.out.println(po1);
 
         PlainOld[] array = seedArray(PlainOld::new, 10);
+
+        BinaryOperator<String> binaryOperator = String::concat;
+        BiFunction<String, String, String> biFunction = String::concat;
+        UnaryOperator<String> unaryOperator = String::toUpperCase;
+
+        System.out.println(">" + binaryOperator.apply("Hello ", "World") + "<");
+        System.out.println(">" + biFunction.apply("Hello ", "World") + "<");
+        System.out.println(">" + unaryOperator.apply("Hello World") + "<");
     }
 
     public static <T> void calculator(BinaryOperator<T> operator, T t1, T t2) {
